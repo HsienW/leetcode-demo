@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Best Time To Buy And Sell Stock</title>
+</head>
+<body>
+<script>
+
+    // 您將獲得一個數組價格，其中價格 [i] 是給定股票在第 i 天的價格。
+    // 您希望通過選擇某一天購買一隻股票並選擇未來的另一天出售該股票來最大化您的利潤。
+    // 返回您可以從這次交易中獲得的最大利潤。 如果您無法獲得任何利潤，則返回 0
+
+    const prices = [11, 54, 666, 2, 33, 342, 1, 433, 7, 888, 190, 64];
+
+    const getBestTime = function (array) {
+        let bestPrice = 0;
+        let resultIndex;
+
+        for (let i = 0; i < array.length; i++) {
+            for (let j = i + 1; j < array.length; j++) {
+                if (array[j] > bestPrice) {
+                    bestPrice = array[j];
+                    resultIndex = j;
+                }
+            }
+        }
+
+        return resultIndex;
+    }
+
+    const getBestTimeV2 = function (array) {
+        if (array.length === 0 || array.length === 1) {
+            return 0;
+        }
+        let maxPrice = array[0];
+        let minPrice = array[0];
+        let bestSellIndex;
+        let bestBuyIndex;
+
+        for (let i = 0; i < array.length; i++) {
+            if (array[i + 1] > array[i] && array[i + 1] > maxPrice) {
+                maxPrice = array[i + 1];
+                bestSellIndex = i + 1;
+            }
+            if (array[i] < minPrice) {
+                minPrice = array[i];
+                bestBuyIndex = i;
+            }
+        }
+
+        return {
+            maxPrice: maxPrice,
+            minPrice: minPrice,
+            bestSellIndex: bestSellIndex,
+            bestBuyIndex: bestBuyIndex
+        };
+    }
+
+    const pricesTwo = [7, 1, 5, 3, 6, 4];
+
+    // 前i天的最大收益 = max{前i-1天的最大收益，第i天的价格-前i-1天中的最小价格}
+
+    const test = function (prices) {
+        // if (prices.length <= 1) return 0;
+        //
+        // let min = prices[0];
+        // let max = 0;
+        //
+        // for (let i = 1; i < prices.length; i++) {
+        //     max = Math.max(max, prices[i] - min);
+        //     min = Math.min(min, prices[i]);
+        // }
+        //
+        // return max;
+        if (prices.length <= 1) {
+            return 0;
+        }
+
+        let max = 0;
+        let min = prices[0];
+        let index;
+
+        for (let i = 0; i < prices.length; i++) {
+            if (prices[i] - min > max) {
+                max = prices[i] - min;
+                index = i;
+            }
+            if (min > prices[i]) {
+                min = prices[i];
+            }
+        }
+        return max;
+    }
+
+    // console.log(getBestTime(prices));
+    // console.log(getBestTimeV2(prices));
+    console.log(test(pricesTwo)); // 預期 5
+
+</script>
+</body>
+</html>
