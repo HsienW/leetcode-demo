@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>String Get Only First</title>
+</head>
+<body>
+<script>
+
+    // 給定一個 String 找第一個唯一的字, 有就回傳 index 沒有就, 回傳 false
+
+    const getStringOnlyFirst = function (string) {
+        let array = string.split('');
+        let passIndex = [];
+
+        for (let i = 0; i < string.length; i++) {
+            if (passIndex.indexOf(string[i] === -1)) {
+                passIndex.push(i);
+            } else {
+            }
+        }
+
+        if (passIndex.length !== 0) {
+            return passIndex[0]
+        } else {
+            return false;
+        }
+    }
+
+    console.log(getStringOnlyFirst('eeewswred'));
+
+</script>
+</body>
+</html>

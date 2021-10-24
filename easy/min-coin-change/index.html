@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Min Coin Change</title>
+</head>
+<body>
+<script>
+    // Z國的貨幣系統包含面值1元、4元、16元、64元共計4種硬幣，以及面值1024元的紙幣。
+    // 現在小Y使用1024元的紙幣購買了一件價值為N (0 < N \le 1024) N (0 < N ≤ 1024) 的商品，請問最少他會收到多少硬幣？
+    const minCoinChange = function (price) {
+        let coin = [1, 4, 16, 64, 1024];
+        let totalCoin = 0;
+        let diffCash = coin[coin.length - 1] - price;
+
+        if (diffCash <= 0) {
+            return false;
+        }
+
+        for (let i = coin.length; i >= 0; i--) {
+            if (coin[i] % diffCash && diffCash !== 0) {
+                totalCoin = totalCoin + Math.floor(diffCash / coin[i]);
+                diffCash = Math.floor(diffCash % coin[i]);
+            }
+        }
+        return totalCoin;
+    }
+    console.log(minCoinChange(200));
+
+</script>
+</body>
+</html>
