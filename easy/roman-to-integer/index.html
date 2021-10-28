@@ -38,10 +38,10 @@
             // 取出當前的羅馬數字
             let current = string[i];
             // 取出當前下一位的羅馬數字
-            let back = string[i + 1];
+            let next = string[i + 1];
 
             // 如果發現下一位的大於當前的表示為特殊情況, 使用減法
-            if (map[back] > map[current]) {
+            if (map[next] > map[current]) {
                 result = result - map[current];
             } else {
                 // 正常情況, 使用加法

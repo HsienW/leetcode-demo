@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Pokers</title>
+</head>
+<body>
+<script>
+
+    // 總共有36張牌，每張牌是1~9。每個數字4張牌。
+    // 你手裡有其中的14張牌，如果這14張牌滿足如下條件，即算作和牌
+    // 14張牌中有2張相同數字的牌，稱為雀頭。
+    // 除去上述2張牌，剩下12張牌可以組成4個順子或刻子。順子的意思是遞增的連續3個數字牌（例如234,567等），刻子的意思是相同數字的3個數字牌（例如111,777）
+    //
+    // 例如：
+    // 1 1 1 2 2 2 6 6 6 7 7 7 9 9 可以組成1,2,6,7的4個刻子和9的雀頭，可以和牌
+    // 1 1 1 1 2 2 3 3 5 6 7 7 8 9 用1做雀頭，組123,123,567,789的四個順子，可以和牌
+
+    // 1 1 1   2 2 2   3 3 3   5 6 7 7 9 無論用1 2 3 7哪個做雀頭，都無法組成和牌的條件。
+
+
+    // 有一個長度等於
+
+    const pokers = function (string) {
+        let toArray = string.split(' ');
+        // 當前的手牌
+        let map = {};
+        // 配對完的手牌
+        let pairMap = {
+            pair: 0,
+            threePair: 0,
+            fourPair: 0,
+        };
+        let result = '';
+        let pass = false;
+
+        for (let i = 0; i < toArray.length; i++) {
+            if (!map[toArray[i]]) {
+                map[toArray[i]] = toArray[i]
+                continue;
+            }
+            map[toArray[i]] = map[toArray[i]] + toArray[i];
+        }
+
+        // {1: '111', 2: '222', 6: '666', 7: '777', 9: '99'}
+
+        for (let i in map) {
+            let key1 = parseInt(i) + 1;
+            let key2 = parseInt(i) + 2;
+
+            if (map.hasOwnProperty(key1) && map.hasOwnProperty(key2)) {
+                // map[i] = map[i].slice(i, 1);
+                // map[key1] = map[key1].slice(key1, 1);
+                // map[key2] = map[key2].slice(key2, 1);
+                console.log(map);
+            }
+            // if (map[i].length === 3) {
+            //     pairMap.threePair = pairMap.threePair + 1;
+            //     map[i] = map[i].slice(i, 1);
+            // }
+            // if (map[i].length === 2) {
+            //     pairMap.pair = pairMap.pair + 1;
+            //     map[i] = map[i].slice(i, 1);
+            // }
+            // console.log(map[i].length);
+        }
+
+        console.log(map);
+        console.log(pairMap);
+
+
+        // for (let i in map) {
+        //     if (map[i].length === 2) {
+        //         pass = true;
+        //     }
+        //     if (map[i].length === 1) {
+        //         result = result + i;
+        //         pass = true;
+        //     }
+        //     if (map[i].length === 4) {
+        //         pass = true;
+        //     }
+        //     // console.log(map[i].length);
+        // }
+        // for (let i= 0; in) {
+        //
+        // }
+
+        // 合格的是 1個長度4 1個長度1 一個長度2
+    }
+
+    pokers('1 1 1 1 2 2 3 3 5 6 7 7 8 9');
+</script>
+</body>
+</html>
