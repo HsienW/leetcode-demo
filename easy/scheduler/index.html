@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Scheduler</title>
+</head>
+<body>
+<script>
+
+    // JS實現一個帶並發限制的異步調度器Scheduler，
+    // 保證同時運行的任務最多有兩個。
+    // 完善代碼中Scheduler類，
+    // 使得以下程序能正確輸出
+
+    // class Scheduler {
+    //     constructor() {
+    //         this.tasks = [];
+    //         this.concurrent = 0;
+    //     }
+    //
+    //     add(promise) {
+    //         return new Promise((resolve) => {
+    //             console.log('1111');
+    //             console.log(promise);
+    //             this.tasks.push(() => promise().then(resolve));
+    //             this.runTask();
+    //         });
+    //     }
+    //
+    //     runTask() {
+    //         console.log('開始 run 檢查執行排隊');
+    //         if (this.concurrent >= 2) return;
+    //         let currentTask = this.tasks.shift();
+    //         if (currentTask) {
+    //             console.log('有空位可以加入執行排隊');
+    //             console.log(currentTask);
+    //             this.concurrent++;
+    //             currentTask().then(() => {
+    //                 console.log('當前任務做完');
+    //                 this.concurrent -= 1;
+    //                 this.runTask();
+    //             });
+    //         }
+    //     }
+    // }
+
+    class Scheduler {
+        constructor() {
+            this.taskList = [];
+            this.doingIndex = 0;
+        }
+
+        add(promise) {
+            return new Promise((resolve) => {
+                this.taskList.push(() => promise().then(resolve));
+                this.doTask();
+            });
+        }
+
+        doTask() {
+            if (this.doingIndex >= 2) {
+                return;
+            }
+
+            let currentTask = this.taskList.shift();
+
+            if (currentTask) {
+                this.doingIndex++;
+                currentTask().then(() => {
+                    this.doingIndex--;
+                    this.doTask();
+                })
+            }
+        }
+    }
+
+    const timeout = (time) => new Promise(resolve => {
+        setTimeout(resolve, time);
+    })
+
+    const scheduler = new Scheduler();
+    const addTask = (time, order) => {
+        scheduler
+            .add(() => timeout(time))
+            .then(() => {
+                console.log(order)
+            });
+    }
+
+    addTask(1000, '1')
+    addTask(500, '2')
+    addTask(300, '3')
+    addTask(400, '4')
+
+    // 一開始，1、2兩個任務進入隊列
+    // 500ms時，2完成，輸出2，任務3進隊
+    // 800ms時，3完成，輸出3，任務4進隊
+    // 1000ms時，1完成，輸出1
+    // 1200ms時，4完成，輸出4
+
+</script>
+</body>
+</html>
