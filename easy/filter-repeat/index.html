@@ -27,8 +27,23 @@
         return [...new Set(array)];
     }
 
-    console.log(uniqueUseIndexOf(test));
-    console.log(uniqueUseSet(test));
+    // console.log(uniqueUseIndexOf(test));
+    // console.log(uniqueUseSet(test));
+
+    const useObject = function (array) {
+        const result = [];
+        const map = {};
+
+        for (let i = 0; i < array.length; i++) {
+            if (!map[array[i]]) {
+                result.push(array[i]);
+                map[array[i]] = true;
+            }
+        }
+        return result;
+    }
+
+    console.log(useObject(test));
 
 </script>
 </body>

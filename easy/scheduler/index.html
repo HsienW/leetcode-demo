@@ -7,6 +7,31 @@
 <body>
 <script>
 
+    // const single = (function () {
+    //     const isData = {};
+    //
+    //     const addData = function (key, data) {
+    //         isData[key] = data;
+    //     }
+    //     const getData = function (key) {
+    //         return isData[key];
+    //     }
+    //
+    //     return  {
+    //         addData,
+    //         getData
+    //     }
+    // })();
+    //
+    // single.addData('test', ['123', '456']);
+    // console.log(single.getData('test'));
+
+    // const Single = function () {
+    //     let dataList = [];
+    //
+    //
+    // }
+
     // JS實現一個帶並發限制的異步調度器Scheduler，
     // 保證同時運行的任務最多有兩個。
     // 完善代碼中Scheduler類，
@@ -87,16 +112,30 @@
             });
     }
 
-    addTask(1000, '1')
-    addTask(500, '2')
-    addTask(300, '3')
-    addTask(400, '4')
+    // addTask(1000, '1')
+    // addTask(500, '2')
+    // addTask(300, '3')
+    // addTask(400, '4')
 
     // 一開始，1、2兩個任務進入隊列
     // 500ms時，2完成，輸出2，任務3進隊
     // 800ms時，3完成，輸出3，任務4進隊
     // 1000ms時，1完成，輸出1
     // 1200ms時，4完成，輸出4
+
+    // 1 1 2 3 5 8
+
+    const log = function (value) {
+        if (value <= 2 && value !== 0) {
+            return 1;
+        } else {
+            return log(value - 1) + log(value - 2);
+        }
+    };
+
+    for (let i = 1; i < 7; i++) {
+        console.log(log(i));
+    }
 
 </script>
 </body>
