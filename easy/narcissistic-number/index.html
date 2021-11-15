@@ -8,43 +8,85 @@
 <script>
 
     // 100 120
-    const isNarc = function (num) {
-        let array = num.toString().split('');
-        let sum = 0;
-        for (let i = 0; i < array.length; i++) {
-            sum = sum + Math.pow(parseInt(array[i]), array.length);
-        }
+    // const isNarc = function (num) {
+    //     let array = num.toString().split('');
+    //     let sum = 0;
+    //     for (let i = 0; i < array.length; i++) {
+    //         sum = sum + Math.pow(parseInt(array[i]), array.length);
+    //     }
+    //
+    //     if (sum === num) {
+    //         return sum;
+    //     } else {
+    //         return false;
+    //     }
+    // }
+    //
+    // // 100 120
+    // const getNarc = function (string) {
+    //     const array = string.split(' ');
+    //     const min = parseInt(array[0]);
+    //     const max = parseInt(array[1]);
+    //     let result = '';
+    //
+    //     for (let i = min; i < max; i++) {
+    //         let check = isNarc(i);
+    //         if (check) {
+    //             result = result + ' ' + check.toString();
+    //         }
+    //     }
+    //     if (result.length !==0) {
+    //         return result;
+    //     } else {
+    //         return 'no';
+    //     }
+    // }
+    //
+    // print(getNarc('100 120'));
 
-        if (sum === num) {
-            return sum;
-        } else {
-            return false;
+    // 所謂「水仙花數」是指一個三位數，其各位數字立方和等於該數本身。
+    // 例如：153是一個「水仙花數」，因為153=1的三次方＋5的三次方＋3的三次方。
+
+    // 思路:
+    // 1. 先取出 input 數字長度
+    // 2. 用每個數字乘以數字長度的平方合
+    // 3. 用 DP 的方式每次的平方合相加, 去比較當前的 input 是否相等
+
+    const checkNumber = function (number) {
+        let toSiring = number.toString();
+        let array = toSiring.split('');
+        let result = 0;
+
+        for (let i of array) {
+            result = result + Math.pow(parseInt(i), array.length);
         }
+        return result === number ? result : false;
     }
 
-    // 100 120
-    const getNarc = function (string) {
-        const array = string.split(' ');
-        const min = parseInt(array[0]);
-        const max = parseInt(array[1]);
-        let result = '';
+    const loopArray = function (array) {
+        let result = [];
 
-        for (let i = min; i < max; i++) {
-            let check = isNarc(i);
+        for (let i = array[0]; i < array[1]; i++) {
+            let check = checkNumber(i);
             if (check) {
-                result = result + ' ' + check.toString();
+                result.push(check);
             }
         }
-        if (result.length !==0) {
-            return result;
-        } else {
-            return 'no';
-        }
+        return result.length === 0 ? ['no'] : result;
     }
 
-    print(getNarc('100 120'));
+    const getNarc = function (input) {
+        let output = [];
 
-    // console.log(getNarc('100 120'));
+        for (let i = 0; i < input.length; i++) {
+            output[i] = loopArray(input[i]);
+        }
+
+        console.log(output);
+    }
+
+    getNarc([[100, 120], [300, 380]]);
+
 </script>
 </body>
 </html>
