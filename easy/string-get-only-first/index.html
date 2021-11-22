@@ -6,17 +6,14 @@
 </head>
 <body>
 <script>
-
     // 給定一個 String 找第一個唯一的字, 有就回傳 index 沒有就, 回傳 false
 
     const getStringOnlyFirst = function (string) {
-        let array = string.split('');
         let passIndex = [];
 
         for (let i = 0; i < string.length; i++) {
             if (passIndex.indexOf(string[i] === -1)) {
                 passIndex.push(i);
-            } else {
             }
         }
 
