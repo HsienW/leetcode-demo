@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Reverse Linked List</title>
+</head>
+<body>
+<script>
+
+    // 給你單鍊錶的頭節點 head ，請你反轉鍊錶，並返回反轉後的鍊錶。
+    // 輸入：head = [1,2,3,4,5]
+    // 輸出：[5,4,3,2,1]
+
+    function CreateNode(value) {
+        this.value = value;
+        this.next = null;
+    }
+
+    function CreateList(...nodes) {
+        this.head = nodes[0];
+        this.length = nodes.length;
+        for (let i = 0; i < nodes.length - 1; i++) {
+            if (nodes[i + 1]) {
+                nodes[i].next = nodes[i + 1];
+            }
+        }
+    }
+
+    const node1 = new CreateNode(1);
+    const node2 = new CreateNode(2);
+    const node3 = new CreateNode(3);
+    const node4 = new CreateNode(4);
+    const node5 = new CreateNode(5);
+    const list = new CreateList(node1, node2, node3, node4, node5);
+
+    // 使用雙指針的方式
+    const reverseLinkedList = function (node) {
+        // temp 為暫存 next 用的變數
+        let temp = null;
+        let prev = null;
+        // current 直接拷貝出來一份, 不影響記憶體, 比較好看出
+        let current = JSON.parse(JSON.stringify(node));
+
+        while (current) {
+            // 保存下一個節點
+            temp = current.next;
+            current.next = prev;
+            prev = current;
+            current = temp;
+        }
+        return prev;
+    }
+
+    console.log(list);
+    console.log(reverseLinkedList(node1));
+
+
+</script>
+</body>
+</html>
