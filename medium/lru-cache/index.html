@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>LRU Cache</title>
+</head>
+<body>
+<script>
+
+    // 運用你所掌握的數據結構，設計和實現一個 LRU (最近最少使用) 緩存機制 。
+    // 實現 LRUCache 類：
+    //
+    // LRUCache(int capacity) 以正整數作為容量 capacity 初始化 LRU 緩存
+    // int get(int key) 如果關鍵字 key 存在於緩存中，則返回關鍵字的值，否則返回 -1 。
+    // void put(int key, int value) 如果關鍵字已經存在，則變更其數據值；如果關鍵字不存在，則插入該組「關鍵字-值」。
+    // 當緩存容量達到上限時，它應該在寫入新數據之前刪除最久未使用的數據值，從而為新的數據值留出空間。
+
+    /**
+     * @param {number} capacity
+     */
+    const LRUCache = function (capacity) {
+        this.capacity = capacity;
+        this.dataMap = new Map();
+    };
+
+    /**
+     * @param {number} key
+     * @return {number}
+     */
+    LRUCache.prototype.get = function (key) {
+        let value = this.dataMap.get(key);
+
+        if (typeof value === undefined) {
+            return -1;
+        }
+
+        this.dataMap.delete(key);
+        this.dataMap.set(key, value);
+        return value;
+    };
+
+    /**
+     * @param {number} key
+     * @param {number} value
+     * @return {void}
+     */
+    LRUCache.prototype.put = function (key, value) {
+        if (this.dataMap.has(key)) {
+            this.dataMap.delete(key);
+        }
+
+        this.dataMap.set(key, value)
+
+        let keys = this.dataMap.keys();
+
+        while (this.dataMap.size > this.capacity) {
+            this.dataMap.delete(keys.next().value);
+        }
+    };
+
+    const lRUCache = new LRUCache(2);
+
+    lRUCache.put(1, 1); // 缓存是 {1=1}
+    lRUCache.put(2, 2); // 缓存是 {1=1, 2=2}
+    console.log(lRUCache.get(1));    // 返回 1
+
+    /**
+     * Your LRUCache object will be instantiated and called as such:
+     * var obj = new LRUCache(capacity)
+     * var param_1 = obj.get(key)
+     * obj.put(key,value)
+     */
+
+</script>
+</body>
+</html>
