@@ -19,14 +19,18 @@
      * @param {number} capacity
      */
     const LRUCache = function (capacity) {
-        this.capacity = capacity;
+        // 使用 map 實作, map 的特性是存入的 data 是有序的
+        // 舊的在前新的在後
         this.dataMap = new Map();
+        // 設定這個 map 儲存的大小
+        this.capacity = capacity;
     };
 
     /**
      * @param {number} key
      * @return {number}
      */
+    // get 操作是找到就回傳, 然後把 key, value 拉到緩存最新的順序, 如果沒找到就回 -1
     LRUCache.prototype.get = function (key) {
         let value = this.dataMap.get(key);
 
@@ -34,7 +38,9 @@
             return -1;
         }
 
+        // 先把 map 原先裡的那個砍掉, 移除原本的順序
         this.dataMap.delete(key);
+        // 再次加入 map
         this.dataMap.set(key, value);
         return value;
     };
@@ -44,16 +50,23 @@
      * @param {number} value
      * @return {void}
      */
+    // put 操作是把 key, value 存入進去 map, 然後把 key, value 拉到緩存最新的順序
+    // 如果 map 裡的儲存空間不夠了, 就把
     LRUCache.prototype.put = function (key, value) {
+        // 檢查是否有 key 存在, 有的話先把 map 原先裡的那個砍掉, 移除原本的順序
         if (this.dataMap.has(key)) {
             this.dataMap.delete(key);
         }
 
+        // 再次加入 map, map 的特性是最新加入的順序都會在最後面
         this.dataMap.set(key, value)
 
+        // 取出當前的全部 key
         let keys = this.dataMap.keys();
 
+        // 每次 put 都會去檢查, 如果當前的容量已經不夠, 就移除掉最舊的那個(map 中的第一個)
         while (this.dataMap.size > this.capacity) {
+            // keys.next().value 可以從 map 第一個開始取出 key, 再交給 delete 刪除
             this.dataMap.delete(keys.next().value);
         }
     };
