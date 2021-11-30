@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>String To Integer Atoi</title>
+</head>
+<body>
+<script>
+
+    // 無視開頭空格
+    // 返回有符號整數
+    // 無視整數部分後的字符
+    // 範圍在32位內（含）
+    // 其他情況返回0
+
+    // 使用 parseInt 來處理
+    // parseInt 兩個特性
+    // 1. 參數1 要被解析的值。如果參數不是一個字符串，則將其轉換為字符串(使用  ToString 抽像操作)。字符串開頭的空白符將會被忽略。
+    // 2. 從 2 到 36，表示字符串的基數, 以這題來說我們是用 10 進制
+
+    /**
+     * @param {string} str
+     * @return {number}
+     */
+
+    const atoi = function (string) {
+        let number = parseInt(string, 10);
+
+        // 如果檢查判是無法轉換的格式, 就回傳 0
+        if (isNaN(number)) {
+            return 0;
+        }
+
+        // 如果檢查 number 的結果沒有在 2 的負 31 次方 ~ 正的 31 次方之間, 就直接回傳最小或最大
+        if (number < Math.pow(-2, 31) || number > Math.pow(2, 31) - 1) {
+            return number < Math.pow(-2, 31) ? Math.pow(-2, 31) : Math.pow(2, 31) - 1;
+        }
+
+        return number;
+    }
+
+    console.log(Math.pow(-2, 31));
+    console.log(Math.pow(2, 31) - 1);
+
+</script>
+</body>
+</html>
