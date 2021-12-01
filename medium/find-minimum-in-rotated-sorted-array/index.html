@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Find Minimum in Rotated Sorted Array</title>
+</head>
+<body>
+<script>
+
+    // 已知一個長度為 n 的數組，預先按照升序排列，經由 1 到 n 次 旋轉 後，得到輸入數組。例如，原數組 nums = [0,1,2,4,5,6,7] 在變化後可能得到：
+    // 若旋轉 4 次，則可以得到 [4,5,6,7,0,1,2]
+    // 若旋轉 7 次，則可以得到 [0,1,2,4,5,6,7]
+    // 給你一個元素值 互不相同 的數組 nums ，它原來是一個升序排列的數組，並按上述情形進行了多次旋轉。請你找出並返回數組中的 最小元素
+    //
+    // 思路: 不管是反轉幾次的數組, 既然是有序的整數, 可以透過指針來處理
+    // 1. 透過二分法 + 指針來處理, 先設定三個指針(左 中 右)
+    // 2. 如果右邊大於中間, 代表最小值一定在 中指針的右侧, 所以左指針移到 middle+1 的位置
+    // 3. 如果右邊小於中間, 代表最小值一定在 中指針左侧或者就是中指針的位子，所以右指針移到中指針的位置
+
+    // 最基本的用迴圈跑歷遍
+    const findMin = function (nums) {
+        let min = nums[0];
+        for (let i = 1; i < nums.length; i++) {
+            if (nums[i] < min) {
+                min = nums[i];
+            }
+        }
+        return min;
+    };
+
+    // 二分法
+    const findMinNumber = function (nums) {
+        let start = 0;
+        let end = nums.length - 1;
+
+        // 如果中指針的值小於右邊指針的值, 表示最小值會落在中指針的左邊
+        // 相反中指針的值大於右邊指針的值, 表示最小值會落在中指針的右邊
+        while (start < end) {
+            // 設定中間指針
+            let middle = start + Math.floor(end - start) / 2;
+            if (nums[middle] < nums[end]) {
+                // 所以更新右邊指針, 把中指針回押給 end
+                end = middle;
+            } else {
+                // 所以更新左邊指針, 前進到 middle + 1 的一格去找
+                start = middle + 1;
+            }
+        }
+        return nums[start];
+    };
+
+    console.log(findMinNumber([4, 5, 6, 7, 0, 1, 2]));
+</script>
+</body>
+</html>
