@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Longest Substring Without Repeating Characters</title>
+</head>
+<body>
+<script>
+    const lengthOfLongestSubstring = function (string) {
+        let length = 0; // 假定一開始不重複為 0
+        let result = 0; // 用來裝結果
+        const map = new Map();
+
+        for (let i = 0; i < string.length; i++) {
+            if (map.has(string[i]) && map.get(string[i]) >= length) {
+                length = map.get(string[i]) + 1;
+            }
+            result = Math.max(result, i - length + 1);
+            map.set(string[i], i);
+        }
+        return result;
+    };
+
+    console.log(lengthOfLongestSubstring("abcabcbb"));
+
+</script>
+</body>
+</html>
