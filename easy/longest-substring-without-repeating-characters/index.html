@@ -6,22 +6,51 @@
 </head>
 <body>
 <script>
-    const lengthOfLongestSubstring = function (string) {
-        let length = 0; // 假定一開始不重複為 0
-        let result = 0; // 用來裝結果
-        const map = new Map();
+    // const lengthOfLongestSubstring = function (string) {
+    //     let length = 0; // 假定一開始不重複為 0
+    //     let result = 0; // 用來裝結果
+    //     const map = new Map();
+    //
+    //     for (let i = 0; i < string.length; i++) {
+    //         if (map.has(string[i]) && map.get(string[i]) >= length) {
+    //             length = map.get(string[i]) + 1;
+    //         }
+    //         result = Math.max(result, i - length + 1);
+    //         map.set(string[i], i);
+    //     }
+    //     return result;
+    // };
 
-        for (let i = 0; i < string.length; i++) {
-            if (map.has(string[i]) && map.get(string[i]) >= length) {
-                length = map.get(string[i]) + 1;
+    /**
+     * @param {string} string
+     * @return {number}
+     */
+        // 思路: 設雙指針, 右針往下跑, 如果發現重複的就把左針往前一個, 並把重複的值就捨棄
+        // 右指針一定大於左指針
+        // 這樣最後跑完的雙指針中間的區間, 就是最終沒有重複的長度
+    const getLength = function (string) {
+            // 左指針初始為 0
+            let leftIndex = 0;
+            let result = 0;
+            // 利用 map 唯一值特性
+            const map = new Map();
+
+            // 右指針從 0 開始往下跑
+            for (let rightIndex = 0; rightIndex < string.length; rightIndex++) {
+                // 每次都檢查當前右指針對到的 value 是不是存在 map 中, 且位子要大於左指針, 確保區間正確
+                if (map.has(string[rightIndex]) && map.get(string[rightIndex]) >= leftIndex) {
+                    // 若是檢查到了, 就更新左指針往前一個
+                    leftIndex = map.get(string[rightIndex]) + 1;
+                }
+                // result 更新為最新的區間值
+                result = Math.max(result, rightIndex - leftIndex + 1);
+                // value 不存在 map 中, 就放進去
+                map.set(string[rightIndex], rightIndex);
             }
-            result = Math.max(result, i - length + 1);
-            map.set(string[i], i);
+            return result;
         }
-        return result;
-    };
 
-    console.log(lengthOfLongestSubstring("abcabcbb"));
+    console.log(getLength("abcabcbb"));
 
 </script>
 </body>
