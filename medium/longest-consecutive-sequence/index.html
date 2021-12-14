@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Longest Consecutive Sequence</title>
+</head>
+<body>
+<script>
+
+    // 給定一個未排序的整數數組 nums ，找出數字連續的最長序列（不要求序列元素在原數組中連續）的長度。
+    // 請你設計並實現時間複雜度為 O(n) 的算法解決此問題。
+
+    /**
+     * @param {number[]} nums
+     * @return {number}
+     */
+
+        // 思路:
+        // 1.先排序成升序
+        // 2.去重
+        // 3.檢查後數字-當前數字是不是等於1
+
+    const numsA = [100, 4, 200, 1, 3, 2];
+    const numsB = [0, 3, 7, 2, 5, 8, 4, 6, 0, 1];
+    const longestConsecutive = function (nums) {
+        nums.sort((a, b) => {
+            return a - b;
+        });
+
+        const newNums = Array.from(new Set(nums));
+        let length;
+        let index;
+
+        for (let i = 0; i < newNums.length; i++) {
+            if (newNums[i + 1] - newNums[i] === 1 || newNums[i] === 0) {
+                index = i;
+            }
+
+            if (!newNums[i + 1]) {
+                // 因為是最後一位數自己本身還沒算進去要 + 1, 從 0 開始再 + 1 = + 2
+                index = index + 2;
+            }
+        }
+        length = newNums.splice(0, index).length;
+        return length;
+    };
+
+    console.log(longestConsecutive(numsA));
+
+</script>
+</body>
+</html>
