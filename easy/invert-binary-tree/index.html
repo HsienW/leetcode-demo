@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Invert Binary Tree</title>
+</head>
+<body>
+<script>
+
+    /**
+     * Definition for a binary tree node.
+     * function TreeNode(val, left, right) {
+     *     this.val = (val===undefined ? 0 : val)
+     *     this.left = (left===undefined ? null : left)
+     *     this.right = (right===undefined ? null : right)
+     * }
+     */
+
+    function TreeNode(val, left, right) {
+        this.val = (val === undefined ? 0 : val)
+        this.left = (left === undefined ? null : left)
+        this.right = (right === undefined ? null : right)
+    }
+
+    /**
+     * @param {TreeNode} root
+     * @return {TreeNode}
+     */
+
+    // 翻轉一棵二叉樹。
+
+    const invertTree = function(root) {
+            if(!root) {
+                return null;
+            }
+
+            if(root.length === 0) {
+                return [];
+            }
+
+            let left = root.left;
+            root.left = root.right;
+            root.right = left;
+
+            invertTree(root.left);
+            invertTree(root.right);
+
+            return root;
+        };
+
+</script>
+</body>
+</html>
