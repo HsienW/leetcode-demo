@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Valid Parentheses</title>
+</head>
+<body>
+<script>
+
+    const checkValid = function (string) {
+        let left = 0;
+        let toArray = string.split('');
+
+        for (let i = 0; i < toArray.length; i++) {
+            if (toArray[i] === '(') {
+                left++;
+            } else {
+                left--;
+            }
+        }
+        return left === 0;
+    }
+
+    const searchRight = function (string) {
+        if(string === ')') return '(';
+        if(string === ']') return '[';
+        if(string === '}') return '{';
+    }
+
+    const checkValidSolution = function (string) {
+        // 因為是單數所以絕對是不合法的
+        if (string.length % 2) return false;
+
+        let toArray = string.split('');
+        // let stack = [];
+        let map = new Map();
+
+        for (let i = 0; i < toArray.length; i++) {
+            if (toArray[i] === '(' || toArray[i] === '[' || toArray[i] === '{') {
+                map.set(toArray[i], i);
+            } else {
+                if(map.has(searchRight(toArray[i]))) {
+                    map.delete(searchRight(toArray[i]));
+                }
+            }
+        }
+
+        return map.size  === 0;
+    }
+
+    console.log(checkValidSolution('({{{{})'));
+</script>
+</body>
+</html>
