@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Minimum Add to Make Parentheses Valid</title>
+</head>
+<body>
+<script>
+
+    // 給定一個由 '(' 和 ')' 括號組成的字符串 S，我們需要添加最少的括號（ '(' 或是 ')'，可以在任何位置），以使得到的括號字符串有效。
+    // 從形式上講，只有滿足下面幾點之一，括號字符串才是有效的：
+    // 它是一個空字符串，或者
+    // 它可以被寫成（A 與 B 連接）, 其中 A 和 B 都是有效字符串，或者
+    // 它可以被寫作 (A)，其中 A 是有效字符串。
+    // 給定一個括號字符串，返回為使結果字符串有效而必須添加的最少括號數。
+
+
+    // 思路:
+    // 1. 先咬住以左邊的括號當基準, 由 left 計算
+    // 2. 當遇到一個匹配的右括號時, right + 1 計算
+    // 3. 當發現右括號匹配為 -1 也就是出現多的括號時, left + 1, 表示需要補上一個左括號, 然後把右邊歸零
+    // 4. 最後返回 left + right, 表示左右括號需要補上多少才能成為合法的括號
+    /**
+     * @param {string} s
+     * @return {number}
+     */
+    const minAddToMakeValid = function (s) {
+        let left = 0;
+        let right = 0;
+
+        for (let i = 0; i < s.length; i++) {
+            if (s[i] === '(') {
+                right++;
+            }
+
+            if (s[i] === ')') {
+                right--;
+
+                if (right === -1) {
+                    left++;
+                    right = 0;
+                }
+            }
+        }
+
+        return left + right
+    };
+</script>
+</body>
+</html>
