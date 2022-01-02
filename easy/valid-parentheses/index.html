@@ -22,33 +22,34 @@
     }
 
     const searchRight = function (string) {
-        if(string === ')') return '(';
-        if(string === ']') return '[';
-        if(string === '}') return '{';
+        if (string === ')') return '(';
+        if (string === ']') return '[';
+        if (string === '}') return '{';
     }
 
-    const checkValidSolution = function (string) {
+    const checkValidSolution = function (s) {
         // 因為是單數所以絕對是不合法的
-        if (string.length % 2) return false;
+        if (s.length % 2) return false;
 
-        let toArray = string.split('');
-        // let stack = [];
-        let map = new Map();
+        let toArray = s.split('');
+        let stack = [];
 
         for (let i = 0; i < toArray.length; i++) {
             if (toArray[i] === '(' || toArray[i] === '[' || toArray[i] === '{') {
-                map.set(toArray[i], i);
+                stack.push(toArray[i]);
             } else {
-                if(map.has(searchRight(toArray[i]))) {
-                    map.delete(searchRight(toArray[i]));
+                if (searchRight(toArray[i]) === stack[stack.length - 1]) {
+                    stack.pop();
+                } else {
+                    return false;
                 }
             }
         }
 
-        return map.size  === 0;
+        return stack.length === 0;
     }
 
-    console.log(checkValidSolution('({{{{})'));
+    console.log(checkValidSolution("([)]"));
 </script>
 </body>
 </html>
